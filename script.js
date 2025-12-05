@@ -1,19 +1,24 @@
-// Wait for the entire HTML document to load before running the script
-document.addEventListener("DOMContentLoaded", function () {
+// Initialize app once the HTML document has fully loaded
+document.addEventListener("DOMContentLoaded", init);
 
+// Main initialization function: select DOM elements, define addTask, attach listeners
+function init() {
     // Select DOM elements
     const addButton = document.getElementById("add-task-btn");
     const taskInput = document.getElementById("task-input");
     const taskList = document.getElementById("task-list");
 
     // Function to add a new task
-    function addTask() {
+    // If `suppressAlert` is true, do not show an alert when input is empty (used on load)
+    function addTask(suppressAlert = false) {
         // Get and trim text from input field
         const taskText = taskInput.value.trim();
 
         // Check if input is empty
         if (taskText === "") {
-            alert("Please enter a task.");
+            if (!suppressAlert) {
+                alert("Please enter a task.");
+            }
             return;
         }
 
@@ -24,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Create a remove button
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
-        removeBtn.className = "remove-btn";
+        // Use classList.add to assign the button class
+        removeBtn.classList.add("remove-btn");
 
         // Add event to remove the task when button is clicked
         removeBtn.onclick = function () {
@@ -51,5 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // NOTE: Do NOT call addTask() here on page load — tasks should only be added by user action.
-});
+    // Invoke addTask on load safely (won't alert if input is empty)
+    addTask(true);
+}
