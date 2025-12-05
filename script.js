@@ -51,6 +51,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Call addTask on page load (as instructed)
-    addTask();
+    // NOTE: Do NOT call addTask() here on page load — tasks should only be added by user action.
 });
